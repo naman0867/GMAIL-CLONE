@@ -1,21 +1,18 @@
+import './App.css'
+import Inbox from './components/Inbox'
 import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 
 function App() {
-  return (
-    <div className="h-screen flex flex-col">
 
-      {/* Navbar */}
+  return (
+    <div className='bg-[#F6F8FC] h-screen'>
+      
       <Navbar />
 
-      {/* Body (empty for now, you’ll build later) */}
-      <div className="flex flex-1">
-        <div className="w-64 border-r p-4">
-          Sidebar
-        </div>
-
-        <div className="flex-1 p-4">
-          Inbox Content
-        </div>
+      <div className='flex '>
+        <Sidebar />
+        <Inbox />
       </div>
 
     </div>

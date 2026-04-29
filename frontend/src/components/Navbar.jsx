@@ -4,6 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbGridDots } from "react-icons/tb";
+import Avatar from 'react-avatar';
 
 const Navbar = () => {
   return (
@@ -50,6 +51,7 @@ const Navbar = () => {
         <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
           <TbGridDots size={22} />
         </div>
+        <Avatar src="https://tse1.explicit.bing.net/th/id/OIP.SL2h6xDCIBUYLzsl2ys8egAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" size="35" round={true} />
       </div>
 
     </div>
