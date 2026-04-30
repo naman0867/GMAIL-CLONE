@@ -6,41 +6,30 @@ import { MdOutlineSnooze } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 import { MdOutlineContactPage } from "react-icons/md";
 import { MdExpandMore } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { setOpen } from '../redux/appSlice'; // ✅ FIX
 
 const sidebarItems = [
-  {
-    icon: <MdInbox size="20px" />,
-    text: "Inbox"
-  },
-  {
-    icon: <FaRegStar size="20px" />,
-    text: "Starred"
-  },
-  {
-    icon: <MdOutlineSnooze size="20px" />,
-    text: "Snoozed"
-  },
-  {
-    icon: <IoMdSend size="20px" />,
-    text: "Sent"
-  },
-  {
-    icon: <MdOutlineContactPage size="20px" />,
-    text: "Drafts"
-  },
-  {
-    icon: <MdExpandMore size="20px" />,
-    text: "More"
-  }
+  { icon: <MdInbox size="20px" />, text: "Inbox" },
+  { icon: <FaRegStar size="20px" />, text: "Starred" },
+  { icon: <MdOutlineSnooze size="20px" />, text: "Snoozed" },
+  { icon: <IoMdSend size="20px" />, text: "Sent" },
+  { icon: <MdOutlineContactPage size="20px" />, text: "Drafts" },
+  { icon: <MdExpandMore size="20px" />, text: "More" }
 ];
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className="w-[15%]">
       
       {/* Compose Button */}
       <div className="p-3">
-        <button className="flex items-center gap-2 bg-[#C2E7FF] p-4 rounded-xl hover:shadow-md">
+        <button 
+          onClick={() => dispatch(setOpen(true))}
+          className="flex items-center gap-2 bg-[#C2E7FF] p-4 rounded-xl hover:shadow-md"
+        >
           <LuPencil size="24px" />
           Compose
         </button>
