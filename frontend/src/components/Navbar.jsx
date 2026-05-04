@@ -7,6 +7,8 @@ import { TbGridDots } from "react-icons/tb";
 import Avatar from 'react-avatar';
 
 const Navbar = () => {
+  const user = false;
+
   return (
     <div className='flex items-center justify-between px-4 h-16 border-b'>
 
@@ -26,33 +28,42 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* SEARCH BAR */}
-      <div className='flex-1 max-w-xl mx-6'>
-        <div className='flex items-center bg-[#EAF1FB] px-4 py-2 rounded-full'>
-          <IoIosSearch size={24} className='text-gray-700' />
-          <input
-            type="text"
-            placeholder='Search Mail'
-            className='w-full bg-transparent outline-none ml-2'
-          />
-        </div>
-      </div>
+      {user && (
+        <>
+          {/* SEARCH BAR */}
+          <div className='flex-1 max-w-xl mx-6'>
+            <div className='flex items-center bg-[#EAF1FB] px-4 py-2 rounded-full'>
+              <IoIosSearch size={24} className='text-gray-700' />
+              <input
+                type="text"
+                placeholder='Search Mail'
+                className='w-full bg-transparent outline-none ml-2'
+              />
+            </div>
+          </div>
 
-      {/* RIGHT */}
-      <div className='flex items-center gap-2'>
-        <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
-          <FaRegQuestionCircle size={22} />
-        </div>
+          {/* RIGHT */}
+          <div className='flex items-center gap-2'>
+            <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
+              <FaRegQuestionCircle size={22} />
+            </div>
 
-        <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
-          <IoSettingsOutline size={22} />
-        </div>
+            <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
+              <IoSettingsOutline size={22} />
+            </div>
 
-        <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
-          <TbGridDots size={22} />
-        </div>
-        <Avatar src="https://tse1.explicit.bing.net/th/id/OIP.SL2h6xDCIBUYLzsl2ys8egAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" size="35" round={true} />
-      </div>
+            <div className='p-2 rounded-full hover:bg-gray-200 cursor-pointer'>
+              <TbGridDots size={22} />
+            </div>
+
+            <Avatar 
+              src="https://tse1.explicit.bing.net/th/id/OIP.SL2h6xDCIBUYLzsl2ys8egAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" 
+              size="35" 
+              round={true} 
+            />
+          </div>
+        </>
+      )}
 
     </div>
   )
