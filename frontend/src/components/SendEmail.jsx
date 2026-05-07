@@ -18,7 +18,18 @@ const SendEmail = () => {
   }
 const submitHandler = (e) =>{
   e.preventDefault();
- 
+ try{
+const res = await axios.post("http://localhost:8080/api/v1/email/create",formData,{
+  headers:{
+    'Content-type':"application/json"
+  },
+  withCredentials:true
+});
+console.log(res.data);
+ } catch(error){
+  console.log(error);
+  toast.error(error.response.data.message);
+ }
   dispatch(setOpen(false));
 }
  
