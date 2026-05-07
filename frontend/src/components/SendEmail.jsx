@@ -5,11 +5,22 @@ import { setOpen } from '../redux/appSlice'; // ✅ import
 
 const SendEmail = () => {
   const [formData,setFormData] = useState({
-    
+    to:"",
+    subject:"",
+    message:""
+
   })
-  const { open } = useSelector(store => store.app);
+   const { open } = useSelector(store => store.app);
   const dispatch = useDispatch();
 
+  const changeHandler =(e)=>{
+    setFormData({...formData,[e.target.name]:e.target.value});
+  }
+const submitHandler = (e) =>{
+  e.preventDefault();
+  console.log(formData);
+}
+ 
   return (
     <div className={`${open ? 'block' : 'hidden'} bg-white max-w-6xl shadow-xl shadow-slate-400 rounded-t-md`}>
       
@@ -23,11 +34,11 @@ const SendEmail = () => {
         </div>
       </div>
 
-      <form className='flex flex-col p-3 gap-2'>
-        <input type="text" placeholder='To' className='outline-none py-1' />
-        <input type="text" placeholder='Subject' className='outline-none py-1' />
-        <textarea rows={10} cols={30} className='outline-none py-1'></textarea>
-        <button className='bg-blue-700 rounded-full px-5 py-1 w-fit text-white'>Send</button>
+      <form onSubmit={submitHandler}className='flex flex-col p-3 gap-2'>
+        <input onChange={changeHandler} value={formData.to} name="to" type="text" placeholder='To' className='outline-none py-1' />
+        <input  onChange={changeHandler} value={formData.subject} name= "subject" type="text" placeholder='Subject' className='outline-none py-1' />
+        <textarea onChange={changeHandler} value={formData.message} name="message" rows={10} cols={30} className='outline-none py-1'></textarea>
+        <button type='submit' className='bg-blue-700 rounded-full px-5 py-1 w-fit text-white'>Send</button>
       </form>
 
     </div>
