@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOpen } from '../redux/appSlice'; // ✅ import
 
 const SendEmail = () => {
+  const [formData,setFormData] = useState({
+    
+  })
   const { open } = useSelector(store => store.app);
   const dispatch = useDispatch();
 
@@ -24,6 +27,7 @@ const SendEmail = () => {
         <input type="text" placeholder='To' className='outline-none py-1' />
         <input type="text" placeholder='Subject' className='outline-none py-1' />
         <textarea rows={10} cols={30} className='outline-none py-1'></textarea>
+        <button className='bg-blue-700 rounded-full px-5 py-1 w-fit text-white'>Send</button>
       </form>
 
     </div>

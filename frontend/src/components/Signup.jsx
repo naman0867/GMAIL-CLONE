@@ -1,91 +1,181 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
 
 const Signup = () => {
-  const [input, setInput] = useState({
-    fullname: "",
-    email: "",
-    password: ""
-  });
 
-  const navigate = useNavigate(); // ✅ FIX: call the hook
+    const [fullname, setFullname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const changeHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+    const submitHandler = async (e) => {
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    console.log(input);
+        e.preventDefault();
 
-    try {
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/user/register",
-        input,
-        {
-          headers: {
-            "Content-Type": "application/json" // ✅ FIX: quotes corrected
-          },
-          withCredentials: true
+        try {
+
+            const res = await axios.post(
+                "http://localhost:8080/api/v1/user/register",
+                {
+                    fullname,
+                    email,
+                    password
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    withCredentials: true
+                }
+            );
+
+            alert(res.data.message);
+
+            setFullname("");
+            setEmail("");
+            setPassword("");
+
+        } catch (error) {
+
+            alert(
+                error?.response?.data?.message ||
+                error.message
+            );
         }
-      );
+    };
 
-      if (res.data.success) {
-        navigate("/login"); // ✅ now works
-        toast.success(res.data.message);
-      }
+    return (
+        <div
+            style={{
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#f1f3f4",
+                fontFamily: "Arial"
+            }}
+        >
 
-    
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-      toast.success(error.response.data.message);
-    }
-  };
+            <form
+                onSubmit={submitHandler}
+                style={{
+                    backgroundColor: "white",
+                    padding: "40px",
+                    borderRadius: "12px",
+                    width: "360px",
+                    boxShadow: "0px 4px 15px rgba(0,0,0,0.1)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "18px"
+                }}
+            >
 
-  return (
-    <div className='flex items-center justify-center w-screen h-screen mt-10'>
-      <form onSubmit={submitHandler} className='flex flex-col gap-3 bg-white p-4 rounded-md shadow-md'>
-        <h1 className='font-bold text-2xl uppercase my-2'>Signup</h1>
+                <div
+                    style={{
+                        textAlign: "center"
+                    }}
+                >
+                    <img
+                        src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png"
+                        alt="gmail"
+                        style={{
+                            width: "120px",
+                            marginBottom: "10px"
+                        }}
+                    />
 
-        <input
-          onChange={changeHandler}
-          value={input.fullname}
-          name='fullname'
-          type='text'
-          placeholder='Name'
-          className='border border-gray-400 rounded-md px-2 py-1'
-        />
+                    <h2
+                        style={{
+                            margin: 0,
+                            color: "#202124"
+                        }}
+                    >
+                        Create Account
+                    </h2>
 
-        <input
-          onChange={changeHandler}
-          value={input.email}
-          name='email'
-          type='email'
-          placeholder='Email'
-          className='border border-gray-400 rounded-md px-2 py-1'
-        />
+                    <p
+                        style={{
+                            color: "#5f6368",
+                            fontSize: "14px"
+                        }}
+                    >
+                        Signup to continue
+                    </p>
+                </div>
 
-        <input
-          onChange={changeHandler}
-          value={input.password}
-          name='password'
-          type='password'
-          placeholder='Password'
-          className='border border-gray-400 rounded-md px-2 py-1'
-        />
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={fullname}
+                    onChange={(e) => setFullname(e.target.value)}
+                    required
+                    style={inputStyle}
+                />
 
-        <button type="submit" className='bg-gray-800 p-2 text-white my-2 rounded-md'>
-          Signup
-        </button>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    style={inputStyle}
+                />
 
-        <p>
-          Already have an account?{" "}
-          <Link to="/login" className='text-blue-600'>Login</Link>
-        </p>
-      </form>
-    </div>
-  );
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={inputStyle}
+                />
+
+                <button
+                    type="submit"
+                    style={{
+                        backgroundColor: "#1a73e8",
+                        color: "white",
+                        border: "none",
+                        padding: "12px",
+                        borderRadius: "8px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        fontWeight: "bold"
+                    }}
+                >
+                    Signup
+                </button>
+
+                <p
+                    style={{
+                        textAlign: "center",
+                        fontSize: "14px",
+                        color: "#5f6368"
+                    }}
+                >
+                    Already have an account?{" "}
+                    <span
+                        style={{
+                            color: "#1a73e8",
+                            cursor: "pointer",
+                            fontWeight: "bold"
+                        }}
+                    >
+                        Login
+                    </span>
+                </p>
+
+            </form>
+
+        </div>
+    );
+};
+
+const inputStyle = {
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #dadce0",
+    fontSize: "15px",
+    outline: "none"
 };
 
 export default Signup;

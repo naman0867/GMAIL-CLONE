@@ -7,7 +7,8 @@ import { TbGridDots } from "react-icons/tb";
 import Avatar from 'react-avatar';
 
 const Navbar = () => {
-  const user = false;
+  const{user} = useSelector(store=>store.app);
+  //const user = false;
 
   return (
     <div className='flex items-center justify-between px-4 h-16 border-b'>
@@ -57,7 +58,7 @@ const Navbar = () => {
             </div>
 
             <Avatar 
-              src="https://tse1.explicit.bing.net/th/id/OIP.SL2h6xDCIBUYLzsl2ys8egAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" 
+              src={user.profilePhoto}
               size="35" 
               round={true} 
             />

@@ -1,12 +1,15 @@
-import { User } from "../models/user.model.js"; 
+import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// REGISTER
+
+// ================= REGISTER =================
 export const register = async (req, res) => {
     try {
+
         const { fullname, email, password } = req.body;
 
+        // validation
         if (!fullname || !email || !password) {
             return res.status(400).json({
                 message: "All fields are required",
@@ -14,7 +17,9 @@ export const register = async (req, res) => {
             });
         }
 
+        // check existing user
         const existingUser = await User.findOne({ email });
+
         if (existingUser) {
             return res.status(400).json({
                 message: "User already exists",
@@ -22,9 +27,11 @@ export const register = async (req, res) => {
             });
         }
 
+        // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await User.create({
+        // create user
+        const user = await User.create({
             fullname,
             email,
             password: hashedPassword,
@@ -33,20 +40,31 @@ export const register = async (req, res) => {
 
         return res.status(201).json({
             message: "Account created successfully",
-            success: true
+            success: true,
+            user
         });
 
     } catch (error) {
+
         console.log(error);
+
+        return res.status(500).json({
+            message: error.message,
+            success: false
+        });
     }
 };
 
 
-// LOGIN
+
+// ================= LOGIN =================
 export const login = async (req, res) => {
+
     try {
+
         const { email, password } = req.body;
 
+        // validation
         if (!email || !password) {
             return res.status(400).json({
                 message: "All fields are required",
@@ -54,7 +72,9 @@ export const login = async (req, res) => {
             });
         }
 
+        // find user
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(401).json({
                 message: "Incorrect email or password",
@@ -62,7 +82,12 @@ export const login = async (req, res) => {
             });
         }
 
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        // compare password
+        const isPasswordMatch = await bcrypt.compare(
+            password,
+            user.password
+        );
+
         if (!isPasswordMatch) {
             return res.status(401).json({
                 message: "Incorrect email or password",
@@ -70,6 +95,7 @@ export const login = async (req, res) => {
             });
         }
 
+        // generate token
         const token = jwt.sign(
             { userId: user._id },
             process.env.SECRET_KEY,
@@ -79,16 +105,24 @@ export const login = async (req, res) => {
         return res
             .status(200)
             .cookie("token", token, {
-                maxAge: 1 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
+                maxAge: 24 * 60 * 60 * 1000,
                 sameSite: "strict"
             })
             .json({
-                message: `${user.fullname} logged in successfully.`,
+                message: `${user.fullname} logged in successfully`,
+                success: true,
+                token,
                 user
             });
 
     } catch (error) {
+
         console.log(error);
+
+        return res.status(500).json({
+            message: error.message,
+            success: false
+        });
     }
 };
