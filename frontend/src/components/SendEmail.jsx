@@ -18,7 +18,8 @@ const SendEmail = () => {
   }
 const submitHandler = (e) =>{
   e.preventDefault();
-  console.log(formData);
+ 
+  dispatch(setOpen(false));
 }
  
   return (
