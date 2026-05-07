@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
 import { MdCropSquare } from "react-icons/md";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
-const Email = ({ id = 1234 }) => {
+const Email = ({ email }) => {
+
   const navigate = useNavigate();
 
   const openMail = () => {
-    navigate(`/email/${id}`); // ✅ correct route
+    navigate(`/email/${email._id}`);
   };
 
   return (
@@ -24,20 +25,20 @@ const Email = ({ id = 1234 }) => {
 
       {/* Sender */}
       <div className='w-40 truncate font-semibold'>
-        NamanTech
+        {email?.sender}
       </div>
 
       {/* Subject + Message */}
       <div className='flex-1 text-gray-700 truncate'>
         <span className='font-medium text-black mr-2'>
-          Lorem ipsum
+          {email?.subject}
         </span>
-        - consectetur adipisicing elit...
+        - {email?.message}
       </div>
 
       {/* Time */}
       <div className='text-sm text-gray-500 whitespace-nowrap'>
-        12 days ago
+        {email?.createdAt?.split("T")[0]}
       </div>
 
     </div>
